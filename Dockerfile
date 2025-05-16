@@ -1,5 +1,5 @@
 # Use the official Playwright image
-FROM mcr.microsoft.com/playwright:v1.52.0-focal
+FROM mcr.microsoft.com/playwright:v1.52.0-noble
 
 WORKDIR /app
 

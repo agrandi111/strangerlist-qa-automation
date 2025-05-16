@@ -56,18 +56,34 @@ npm run test:mobile
    ```bash
    docker build -t strangerlist-tests .
    ```
-2. Run all tests (default):
+2. Run all tests (default, all projects):
    ```bash
    docker run --rm strangerlist-tests
    ```
-3. Run a specific project (e.g., mobile):
+3. Run all desktop projects (create-item, edit-item, delete-existing-item, check-item):
+   ```bash
+   docker run --rm strangerlist-tests npx playwright test --project=create-item --project=edit-item --project=delete-existing-item --project=check-item
+   ```
+4. Run all mobile tests:
    ```bash
    docker run --rm strangerlist-tests npx playwright test --project=mobile
    ```
-4. Run a specific test file:
+5. Run a specific test file:
    ```bash
    docker run --rm strangerlist-tests npx playwright test tests/specs/create-itiem.spec.ts
    ```
+
+## Running Tests in GitHub Actions (workflow_dispatch)
+
+If your repository is set up with a GitHub Actions workflow that supports `workflow_dispatch`, you can manually trigger your Playwright tests from the GitHub UI:
+
+1. Go to the **Actions** tab in your GitHub repository.
+2. Select the workflow you want to run (e.g., `Playwright Tests`).
+3. Click the **Run workflow** button.
+4. Select a Project from dropdown menu
+5. Click **Run workflow** to start the job.
+
+This will execute your tests in the GitHub Actions environment
 
 ## Notes
 - Test results and reports are generated in the container. To access them, use Docker volumes to mount a local directory.

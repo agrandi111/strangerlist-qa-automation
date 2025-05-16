@@ -22,6 +22,7 @@ export class HomePage {
     this.itemTextInput = page.getByRole("textbox", {
       name: /maximum allowed length/i,
     });
+    //TODO: parametrize button
     this.createButton = page.getByRole("button", { name: /create item/i });
     this.editButton = page.getByRole("button", { name: /edit/i });
     this.updateItemButton = page.getByRole("button", { name: /update item/i });
@@ -34,7 +35,7 @@ export class HomePage {
   }
 
   // Act
-
+  //TODO: move to base page
   async navigate() {
     await this.page.goto("/", { waitUntil: "domcontentloaded" });
   }
