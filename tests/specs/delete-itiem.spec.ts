@@ -6,30 +6,35 @@ import { randomWords } from "../utils/generateRandomText";
 let home: HomePage;
 
 const itemText = randomWords(100);
-const itemImage = "aut-stranger1.jpg";
+const itemImage = "aut-stranger2.jpg";
 
 
 // 1. Create an item
-test("Create an item", async ({ page }) => {
+test("Delete an item", async ({ page }) => {
     home = new HomePage(page);
     let initialItemCount = 0;
 
     await test.step("Navigate to home page", async () => {
         await home.navigate();
     });
+    //TODO: Replace UI creation(already covered in create-item.spec.ts) with API creation
     await test.step("Add new item", async () => {
         initialItemCount = await home.getItemCount();
         await home.addItem(itemText, `tests/assets/${itemImage}`);
     });
     await test.step("Check item is created", async () => {
         await home.expectItemTextVisibility(itemText, 'isVisible');
-        console.log("itemText", itemText);
-        console.log("itemImage", itemImage);
         await home.expectItemImageVisibility(itemImage, 'isVisible');
     });
-    await test.step("Check item count", async () => {
-        await home.expectItemCount(initialItemCount + 1);
-    });
 
-    //TODO: Clean up the item after the test
+    await test.step("Delete last created item", async () => {
+        await home.deleteItem();
+    });
+    await test.step("Check item is deleted", async () => {
+        await home.expectItemTextVisibility(itemText, 'isNotVisible');
+        await home.expectItemImageVisibility(itemImage, 'isNotVisible');
+    });
+    await test.step("Check item count", async () => {
+        await home.expectItemCount(initialItemCount);
+    });
 });

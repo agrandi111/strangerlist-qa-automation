@@ -22,7 +22,7 @@ test.describe("Edit an existing item", () => {
             await home.editItem(0, itemText);
         });
         await test.step("Check item is updated", async () => {
-            await home.expectItemVisible(itemText);
+            await home.expectItemTextVisibility(itemText, 'isVisible');
         });
     });
 
@@ -33,8 +33,8 @@ test.describe("Edit an existing item", () => {
             await home.editItem(1, itemText, `tests/assets/${itemImage}`);
         });
         await test.step("Check item is updated", async () => {
-            await home.expectItemVisible(itemText);
-            await home.expectItemImageVisible(itemImage, 0);
+            await home.expectItemTextVisibility(itemText, 'isVisible');
+            await home.expectItemImageVisibility(itemImage, 'isVisible', 0);
         });
     });
 
