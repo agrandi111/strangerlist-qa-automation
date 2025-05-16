@@ -44,6 +44,10 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      name: 'desktop',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       name: 'mobile',
       use: { ...devices['Pixel 5'] },
     },

@@ -8,7 +8,6 @@ on:
             default: desktop
             type: choice
             options:
-              - chromium
               - create-item
               - edit-item
               - delete-existing-item
