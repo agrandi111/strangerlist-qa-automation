@@ -6,7 +6,7 @@ import { randomWords } from "../utils/generateRandomText";
 let home: HomePage;
 
 const itemText = randomWords(100);
-const itemImage = "stranger1.jpg";
+const itemImage = "aut-stranger1.jpg";
 
 
 // 1. Create an item

@@ -10,19 +10,20 @@ export class HomePage {
   readonly createButton: Locator;
   readonly fileInput: Locator;
   readonly fileInputNative: Locator;
+  readonly editButton: Locator;
+  readonly updateItemButton: Locator;
+  readonly deleteButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.itemCard = page.getByRole("listitem");
-    //page.locator('main ul > li');
     this.itemDescription = page.getByRole("listitem").locator("p");
-    //page.locator('main ul > li p');
     this.itemImage = page.getByRole("listitem").locator("img");
-    //page.locator('main ul > li img');
-    this.itemTextInput = page.getByRole("textbox", {
-      name: /maximum allowed length/i,
-    });
+    this.itemTextInput = page.getByRole("textbox", { name: /maximum allowed length/i, });
     this.createButton = page.getByRole("button", { name: /create item/i });
+    this.editButton = page.getByRole("button", { name: /edit/i });
+    this.updateItemButton = page.getByRole("button", { name: /update item/i });
+    this.deleteButton = page.getByRole("button", { name: /delete/i });
     this.fileInput = page.getByRole("button", { name: /choose file/i });
     this.fileInputNative = page.locator('input[type="file"]');
   }
@@ -47,6 +48,26 @@ export class HomePage {
     await this.createButton.click();
   }
 
+  async editItem(index: number, text: string, filePath?: string) {
+    //await this.itemCard.filter({hasText: 'Edit'}).first().click();
+    await this.editButton.nth(index).click();
+    await this.updateItemButton.waitFor({ state: "visible" });
+    if (filePath) {
+      await this.uploadImage(filePath);
+    }
+    await this.itemTextInput.waitFor({ state: "visible" });
+    // const currentText = this.itemTextInput.textContent();
+    // console.log(currentText);
+    await this.fillItemTextInput(text);
+    await this.updateItemButton.click();
+  }
+
+  async getCurrentItemText(index: number): Promise<string> {
+    await this.itemDescription.nth(index).waitFor({ state: "visible" });
+    const currentText = await this.itemDescription.nth(index).textContent() || '';
+    return  currentText
+  }
+
   async getItemCount(): Promise<number> {
     await this.itemCard.first().waitFor({ state: "visible" });
     return await this.itemCard.count();
@@ -54,16 +75,17 @@ export class HomePage {
 
   // Assert
   async expectItemCount(count: number) {
-    console.log("itemCard", await this.itemCard.count());
     await expect(this.itemCard).toHaveCount(count);
   }
 
-  async expectItemVisible(text: string) {
+  async expectItemVisible(text: string | RegExp) {
     await expect(this.page.getByText(text)).toBeVisible();
   }
 
-  async expectItemImageVisible(filePath: string) {
-    await expect(this.itemImage.last()).toHaveAttribute(
+  async expectItemImageVisible(filePath: string, order?: number) {
+    let image = order !== undefined ? this.itemImage.nth(order) :
+     this.itemImage.last();
+    await expect(image).toHaveAttribute(
       "src",
       new RegExp(filePath),
     );
