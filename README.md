@@ -60,9 +60,18 @@ npm run test:mobile
    ```bash
    docker run --rm strangerlist-tests
    ```
-3. Run all desktop projects (create-item, edit-item, delete-existing-item, check-item):
+3. Run desktop projects individually(create-item, edit-item, delete-existing-item, check-item):
    ```bash
-   docker run --rm strangerlist-tests npx playwright test --project=create-item --project=edit-item --project=delete-existing-item --project=check-item
+   docker run --rm strangerlist-tests npx playwright test --project=create-item 
+   ```
+      ```bash
+   docker run --rm strangerlist-tests npx playwright test --project=edit-item 
+   ```
+      ```bash
+   docker run --rm strangerlist-tests npx playwright test --project=delete-existing-item
+   ```
+      ```bash
+   docker run --rm strangerlist-tests npx playwright test --project=check-item
    ```
 4. Run all mobile tests:
    ```bash
