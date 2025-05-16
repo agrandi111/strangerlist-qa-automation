@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:chromium": "npx playwright test --project=chromium",
+    "test:create-item": "npx playwright test --project=create-item",
+    "test:edit-item": "npx playwright test --project=edit-item",
+    "test:delete-existing-item": "npx playwright test --project=delete-existing-item",
+    "test:check-item": "npx playwright test --project=check-item",
+    "test:mobile": "npx playwright test --project=mobile",
+    "test:desktop": "npx playwright test --project=chromium"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com-agrandi111:agrandi111/strangerlist-qa-automation.git"
